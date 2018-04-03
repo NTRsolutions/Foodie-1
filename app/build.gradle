@@ -34,6 +34,10 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:11.0.2'
     compile 'com.google.android.gms:play-services-location:11.0.2'
     compile 'com.google.android.gms:play-services-places:11.0.2'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
+    
 }
 apply plugin: 'com.google.gms.google-services'

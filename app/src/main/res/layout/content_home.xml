@@ -8,34 +8,13 @@
     tools:context="com.foodie.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
-    <!--<AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:hint="Enter Place Here"/>-->
-    <!--<fragment
-        android:id="@+id/place_autocomplete_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-        />-->
     <FrameLayout
-        android:id="@+id/camera_preview"
-        android:layout_width="fill_parent"
-        android:layout_height="350dp"
-        android:layout_weight="1"
-        />
+        android:id="@+id/flContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"/>
 
-    <Button
-        android:id="@+id/button_capture"
-        android:text="Capture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        />
-    <!--<Button
+   <!--<Button
         android:id="@+id/btnImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,8 +23,7 @@
         android:id="@+id/imageView1"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_back"
-        android:layout_width="wrap_content"/>
--->
+        android:layout_width="wrap_content"/>-->
     <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

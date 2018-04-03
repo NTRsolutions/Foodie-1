@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#ceddda</color>
     <color name="colorAccent">#1C1817</color>
     <color name="colorLoginLine">#1C1817</color>
 
@@ -15,4 +15,10 @@
     <!-- Facebook/Google -->
     <color name="facebook">#475A95</color>
     <color name="google">#DD4C39</color>
+
+    <color name="colorFT">#93B1B4</color>
+
+    <color name="colorLocationAuto">#CCCCCC</color>
+
+    <color name="colorListingBg">#5C5A5B</color>
 </resources>

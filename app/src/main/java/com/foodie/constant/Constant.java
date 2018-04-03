@@ -23,4 +23,11 @@ public class Constant {
     public static String GMAIL ="gmail";
     public static String SOCIAL_ID ="social_id";
     public static String SOCIAL_TYPE ="social_type";
+
+    public static Integer MAX_IMAGE_UPLOAD = 5;
+
+    public static String CREATE_POST ="create_post";
+    public static String LOCATION_NAME ="social_type";
+    public static String LATITUDE ="latitude";
+    public static String LONGITUDE ="longitude";
 }

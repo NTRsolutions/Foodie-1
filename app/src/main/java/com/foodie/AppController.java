@@ -14,6 +14,10 @@ import com.foodie.utils.SharedPrefrenceManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -40,8 +44,12 @@ public class AppController extends Application {
         mInstance = this;
         //Facebook SDK Initialize from Complete Instance
         AppEventsLogger.activateApp(AppController.this);
+        //Google SK|DK initialize for complete App
         googleInitialize(AppController.this);
+        //Get Google HaskKEY
         printHashKey();
+        //Init iMage Loader
+        initImageLoader(getApplicationContext());
     }
 
     public static synchronized AppController getInstance() {
@@ -81,12 +89,25 @@ public class AppController extends Application {
                 .requestProfile()
                 .requestEmail()
                 .build();
-
         mGoogleApiClient = new GoogleApiClient.Builder(mCtx)
                 //.enableAutoManage(mCtx, mCtx)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         mGoogleApiClient.connect();
+    }
 
+    //Initiate Image Loader Configuration
+    public static void initImageLoader(Context context) {
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(
+                context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        config.writeDebugLogs(); // Remove for release app
+
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
     }
 }

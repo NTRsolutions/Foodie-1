@@ -4,12 +4,20 @@ import com.foodie.constant.WebServiceConstant;
 import com.foodie.models.ServerResponse;
 import com.foodie.models.User;
 
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
 /**
@@ -63,4 +71,23 @@ public interface APIInterface {
                                   @Field("social_type") String social_type,
                                   @Field("device_token") String device_token,
                                   @Field("device_type") String device_type);
+
+    @GET(WebServiceConstant.GET_INGREDIENT)
+        //Call<ServerResponse> createUser(@Body User user);
+    Call<ServerResponse> get_ingredients();
+
+    @GET(WebServiceConstant.GET_FOOD_ITEM)
+        //Call<ServerResponse> createUser(@Body User user);
+    Call<ServerResponse> get_food_posts();
+
+    @GET(WebServiceConstant.GET_FOOD_TYPE_WITH_ITEM)
+        //Call<ServerResponse> createUser(@Body User user);
+    Call<ServerResponse> getFoodTasteTypeItemList();
+
+    @Multipart
+    @POST(WebServiceConstant.SAVE_POST)
+    Call<ServerResponse> savePost(@Part List<MultipartBody.Part> images,
+                                  @PartMap() Map<String, RequestBody> extraData
+                                   );
+    /*Call<ServerResponse> savePost(@Part("description") RequestBody description, @Part List<MultipartBody.Part> file);*/
 }

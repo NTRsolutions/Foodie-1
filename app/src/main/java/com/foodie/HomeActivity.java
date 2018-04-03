@@ -2,15 +2,14 @@ package com.foodie;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,66 +19,42 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
 import com.foodie.constant.Constant;
-import com.foodie.utils.CameraPreview;
-import com.foodie.utils.CommonUtils;
+import com.foodie.fragments.CreateImageFragment;
+import com.foodie.fragments.CreatePostLocationFragment;
+import com.foodie.fragments.FoodItemListsFragment;
 import com.foodie.utils.SharedPrefrenceManager;
 import com.google.android.gms.auth.api.Auth;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
-
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private NavigationView navigationView;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Bitmap mImageBitmap;
     private String mCurrentPhotoPath;
     private ImageView mImageView;
 
-    private Camera mCamera;
-    private CameraPreview mPreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //FacebookSdk.sdkInitialize(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Create an instance of Camera
-        mCamera = CommonUtils.getCameraInstance();
-
-        // Create our Preview view and set it as the content of our activity.
-        mPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-        preview.addView(mPreview);
-
-        Button captureButton = (Button) findViewById(R.id.button_capture);
-        captureButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // get an image from the camera
-                        mCamera.takePicture(null, null, mPicture);
-                    }
-                }
-        );
-/*
-        mImageView = (ImageView)this.findViewById(R.id.imageView1);
-        Button photoButton = (Button) this.findViewById(R.id.btnImage);
+        //mImageView = (ImageView)this.findViewById(R.id.imageView1);
+        /*Button photoButton = (Button) this.findViewById(R.id.btnImage);
         photoButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -106,33 +81,16 @@ public class HomeActivity extends AppCompatActivity
             }
         });*/
 
-        //AutoComplete Google Place API START
-        /*PlaceAutocompleteFragment places= (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-        places.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
 
-                Toast.makeText(getApplicationContext(),place.getName(),Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(Status status) {
-
-                Toast.makeText(getApplicationContext(),status.toString(),Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        //END
-*/
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                displaySelectedScreen(R.id.nav_create_post);
+                *//*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*//*
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -140,32 +98,19 @@ public class HomeActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        TextView userName = (TextView)header.findViewById(R.id.loggedUserName);
+        TextView userEmail = (TextView)header.findViewById(R.id.loggedUserEmail);
+        //imgloggedUser = (ImageView)header.findViewById(R.id.imgHeaderUserImg);
+        userName.setText(AppController.aSessionUserData.getUsername().toString());
+        userEmail.setText(AppController.aSessionUserData.getEmail().toString());
+
+        displaySelectedScreen(0);
     }
-    private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-
-            File pictureFile = CommonUtils.getOutputMediaFile(MEDIA_TYPE_IMAGE);
-            Log.e("Picture Name",pictureFile.toString()+" Gopal Sharma ");
-            if (pictureFile == null){
-                //Log.d("asd", "Error creating media file, check storage permissions: " +e.getMessage());
-                return;
-            }
-
-            try {
-                FileOutputStream fos = new FileOutputStream(pictureFile);
-                fos.write(data);
-                fos.close();
-            } catch (FileNotFoundException e) {
-                Log.d("asd", "File not found: " + e.getMessage());
-            } catch (IOException e) {
-                Log.d("asd", "Error accessing file: " + e.getMessage());
-            }
-        }
-    };
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -177,7 +122,7 @@ public class HomeActivity extends AppCompatActivity
                 ".jpg",         // suffix
                 storageDir      // directory
         );
-
+        Log.e("Image Save DIR",image.getAbsolutePath());
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
@@ -185,6 +130,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 mImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
@@ -200,10 +146,36 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            FragmentManager manager = getSupportFragmentManager();
+            if(manager.getBackStackEntryCount() > 1) {
+                super.onBackPressed();
+                Fragment currentFragment = manager.findFragmentById(R.id.flContent);
+                //HomeFragment currentFragment = (HomeFragment) manager.findFragmentById(R.id.flContent);
+                //navigationView.getMenu().getItem(0).setChecked(true);
+                setCheckedCurrentMenu(currentFragment);
+            }else{
+                finish();
+            }
         }
     }
-
+    /**
+     * function use for checked current menu according to fragment change
+     * @param //currentFragment
+     */
+    private void setCheckedCurrentMenu(Fragment currentFragment){
+        if(currentFragment instanceof FoodItemListsFragment){
+            navigationView.setCheckedItem(R.id.nav_post);//.getMenu().getItem(0).setChecked(true);
+        } else if(currentFragment instanceof CreatePostLocationFragment){
+            navigationView.setCheckedItem(R.id.nav_create_post);
+        } /*else if(currentFragment instanceof ProfileFragment){
+            navigationView.setCheckedItem(R.id.nav_profile);
+        } else if(currentFragment instanceof EditProfileFragment){
+            navigationView.setCheckedItem(R.id.nav_edit_profile);
+        } else if(currentFragment instanceof ChangePasswordFragment){
+            navigationView.setCheckedItem(R.id.nav_change_password);
+        }*/
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -234,21 +206,26 @@ public class HomeActivity extends AppCompatActivity
 
         //creating fragment object
         Fragment fragment = null;
-
+        Log.e("Dashboard Menu item", String.valueOf(itemId));
         //initializing the fragment object which is selected
         switch (itemId) {
-            /*case R.id.nav_menu1:
-                fragment = new Menu1();
+            case R.id.nav_create_post:
+                fragment = new CreateImageFragment();
                 break;
-            case R.id.nav_menu2:
-                fragment = new Menu2();
+            /*case R.id.nav_gallery:
+                fragment = new CreatePostImageFragment();
+                break;*/
+            /*case R.id.nav_manage:
+                fragment = new FoodTasteTypeFragment();
+                break;*/
+            /*case R.id.nav_slideshow:
+                fragment = new FoodItemListsFragment();
                 break;
-            case R.id.nav_menu3:
-                fragment = new Menu3();
+            case R.id.nav_share:
+                fragment = new AddFoodIngredientFragment();
                 break;*/
             case R.id.nav_logout://logout current session
             {
-
                 //Remove Social Login session
                 if(SharedPrefrenceManager.getInstance(this).isSocialLogged()){
                     if(SharedPrefrenceManager.getInstance(this).getSocialType().equals(Constant.FACEBOOK)){
@@ -268,21 +245,15 @@ public class HomeActivity extends AppCompatActivity
                 break;
             }
             default:
+                fragment = new FoodItemListsFragment();
                 break;
         }
 
         if(fragment != null ){
-            attachFragmentOnUi(fragment, "DashBoardFragment",itemId);
+            //replacing the fragment
+            attachFragmentOnUi(fragment, fragment.toString(),itemId);
+            setCheckedCurrentMenu(fragment);
         }
-        //replacing the fragment
-        /*if (fragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.commit();
-        }*/
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
     }
 
     /**
@@ -291,31 +262,43 @@ public class HomeActivity extends AppCompatActivity
      * @param tag
      * @param navId
      */
-    private void attachFragmentOnUi(Fragment fragment, String tag,int navId){
+    public void attachFragmentOnUi(Fragment fragment, String tag,int navId){
+        if(fragment !=  null){
+            Log.e("Navigation id",""+navId);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
+            if(navId==R.id.nav_post){
+                Log.e("Stack ","null back stack ");
+                fragmentTransaction.add(R.id.flContent, fragment);
+                fragmentTransaction.addToBackStack(null);
+            }else{
+                fragmentTransaction.replace(R.id.flContent, fragment);
+                fragmentTransaction.addToBackStack(tag);
+            }
+
+            fragmentTransaction.commit();
+            navigationView.setCheckedItem(navId);
+            //navigationView.getMenu().getItem(position).setChecked(true);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        }
     }
-
+    public void clearBackStackFragment(){
+        FragmentManager frg = getSupportFragmentManager();
+        for(int j =0;j<frg.getBackStackEntryCount();j++){
+            frg.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         displaySelectedScreen(item.getItemId());
-        /*int id = item.getItemId();
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+        /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);*/
         return true;
     }
+
+
 }

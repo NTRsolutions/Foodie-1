@@ -106,6 +106,7 @@ public class SharedPrefrenceManager {
         SharedPreferences sharedPreferences = getSharedPrefrences(Constant.SOCIAL_MEDIA);
         return sharedPreferences.getString(Constant.SOCIAL_TYPE,null);
     }
+
     public boolean removeSocialData(){
         SharedPreferences.Editor editor = getSharedPrefrences(Constant.SOCIAL_MEDIA).edit();
         editor.remove(Constant.SOCIAL_LOGGED);
@@ -113,6 +114,16 @@ public class SharedPrefrenceManager {
         editor.remove(Constant.SOCIAL_TYPE);
         editor.apply();
         return true;
+    }
+
+    public void setTmpSaveData(String edtType,String key,String Val) {
+        SharedPreferences.Editor editor = getSharedPrefrences(edtType).edit();
+        editor.putString(key, Val);
+        editor.apply();
+    }
+    public String getTmpSaveData(String edtType,String key) {
+        SharedPreferences editor = getSharedPrefrences(edtType);
+        return editor.getString(key,null);
     }
     /*
      * set,get and remove user id for reset password

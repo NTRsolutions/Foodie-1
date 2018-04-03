@@ -227,6 +227,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mProgressDialog.show();
             btnFbLogin.performClick();
         }else if(view==btnLogin){
+            //intentActivity = new Intent(this,HomeActivity.class);
+            //startActivity(intentActivity);
             loginAction();
         }else if (view==btnReg){
             intentActivity = new Intent(this,RegisterActivity.class);
@@ -245,6 +247,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         strUsername = edtUsername.getText().toString().trim();
         strPassword = edtPassword.getText().toString().trim();
         if(loginValidate()){
+
             CommonUtils.clearErrorFromView(loginForm);
             CommonUtils.hideKeyboard(LoginActivity.this);
             if(InternetConnect.isConnected(LoginActivity.this)) {
@@ -312,7 +315,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void handleSignInResult(GoogleSignInResult result){
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
-            try {
+            try{
                 GoogleSignInAccount acct = result.getSignInAccount();
                 String gIdToken = acct.getIdToken();
 
@@ -376,19 +379,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         call.enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-
-                ServerResponse responseData = response.body();
-                Log.e("Login WebService",responseData.getCode().toString()+" "+responseData.getUser().getUsername());
-                if(responseData.getCode().toString().equals("1")){
-                    SharedPrefrenceManager.getInstance(LoginActivity.this).setUserDetails(responseData.getUser());
-                    AppController.getSessionData(getApplicationContext());
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
-                    mProgressDialog.dismiss();
-                }else{
-                    mProgressDialog.dismiss();
-                    CommonUtils.showAlertMessage(LoginActivity.this,getString(R.string.error),getString(R.string.error),responseData.getMessage(),getString(R.string.ok));
+                try {
+                    ServerResponse responseData = response.body();
+                    //Log.e("Login WebService", responseData.getCode().toString() + " " + responseData.getUser().getUsername());
+                    if (responseData.getCode().toString().equals("1")) {
+                        SharedPrefrenceManager.getInstance(LoginActivity.this).setUserDetails(responseData.getUser());
+                        AppController.getSessionData(getApplicationContext());
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
+                        mProgressDialog.dismiss();
+                    } else {
+                        mProgressDialog.dismiss();
+                        CommonUtils.showAlertMessage(LoginActivity.this, getString(R.string.error), getString(R.string.error), responseData.getMessage(), getString(R.string.ok));
+                    }
+                }catch(Exception e){
+                    CommonUtils.showAlertMessage(LoginActivity.this, getString(R.string.error), getString(R.string.error), e.getMessage(), getString(R.string.ok));
                 }
+
                 //Log.e("Gopal Web Service ",responseData.getCode()+' '+ responseData.getMessage());
             }
 
@@ -446,4 +453,3 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 }
-

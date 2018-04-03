@@ -3,6 +3,12 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_post"
+            android:title="HOME" />
+        <item
+            android:id="@+id/nav_create_post"
+            android:title="CREATE POST" />
+        <!--<item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
             android:title="Import" />
@@ -18,10 +24,10 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Tools" />
-
+-->
     </group>
 
-    <item android:title="Communicate">
+    <!--<item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
@@ -32,12 +38,12 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
         </menu>
-    </item>
+    </item>-->
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_logout"
-            android:title="@string/menu_logout" />
+            android:title="LOG OUT" />
     </group>
 
 </menu>

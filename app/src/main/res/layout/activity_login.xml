@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/app_bg"
+    android:background="@drawable/ic_bg"
     android:gravity="center">
 
 
@@ -67,6 +67,7 @@
                         android:textSize="@dimen/app_form_input_font"
                         android:background="@null"
                         android:id="@+id/edtLogUsername"
+                        android:imeOptions="actionNext"
                         android:layout_marginLeft="10dp"
                         />
                 </LinearLayout>
@@ -89,6 +90,7 @@
                         android:background="@null"
                         android:id="@+id/edtLogPass"
                         android:inputType="textPassword"
+                        android:imeOptions="actionDone"
                         android:textSize="@dimen/app_form_input_font"
                         android:layout_marginLeft="10dp"
                         />
