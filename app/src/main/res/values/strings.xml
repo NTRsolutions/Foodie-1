@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">Foodie</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Social API IDs -->
+    <string name="facebook_app_id">156850271666267</string>
+    <string name="google_api_id">AIzaSyAhscd0q7larUQU98GeOUec3OgN-pqiHQc</string>
+    <string name="gmail_web_client_id">110837175670-kih8hea1h2nf9phpr2plvoa7790uji7r.apps.googleusercontent.com</string>
+
+    <!-- Alert Box String-->
+    <string name="error">Error</string>
+    <string name="ok">Ok</string>
+    <string name="success">Success</string>
+    <string name="warning">Warning</string>
+    <string name="info">Info</string>
+
+    <!-- InterNet Connection String-->
+    <string name="net_connection_error_title"><b>Network Error</b></string>
+    <string name="net_connection_error_msg">An unknown network connection error has occurred.</string>
+    <string name="net_connection_error_btn"><b>dismiss</b></string>
+
+    <!-- Heading All Screenes -->
+    <string name="login_heading">Login Here</string>
+    <string name="reg_heading">Registration</string>
+    <string name="forgot_heading">Forgot Password ?</string>
+    <string name="validate_otp_heading">Validate OTP</string>
+    <string name="reset_heading">Reset Password</string>
+
+    <!-- Button -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="submit">Save</string>
+    <string name="login_forgot_password">Forgot Password ?</string>
+    <string name="login_remember">Remember Me</string>
+
+    <!-- Hint String -->
+    <string name="hint_name">Name</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_username">UserName</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+
+    <!-- Login Screen -->
+    <string name="login_or">OR</string>
+    <string name="login_facebook">Sign in with facebook</string>
+    <string name="login_google">Sign in with google</string>
+
+    <!-- Forgot Screen -->
+    <string name="forgot_sub_head_1">Enter your email below to receive</string>
+    <string name="forgot_sub_head_2">your Password Reset Instruction</string>
+    <string name="forgot_hint_email">email@foodie.com</string>
+    <string name="forgot_btn">Request Password Reset</string>
+
+    <!-- Validate Forgot OTP Screen -->
+    <string name="validate_otp_sub_head">Please check your email.</string>
+    <string name="validate_otp_sub_head_1">Enter Valid OTP.</string>
+    <string name="validate_otp_hint_OTP">OTP</string>
+    <string name="validate_otp_btn">Validate</string>
+
+    <!-- Reset Password Screen -->
+    <string name="reset_hint_password">New Password</string>
+    <string name="reset_hint_password_confirm">Confirm Password</string>
+    <string name="reset_btn">Done</string>
+    <string name="reset_sub_head">Please Reset your password.</string>
+
+    <!--Validation Error Messages-->
+    <string name="error_message">There is a problem in your request.</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_username">This username is invalid</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_match_password">The passwords you entered do not match</string>
+
+
+    <string name="permission_rationale">Contacts permissions are needed for providing email
+        completions.
+    </string>
+
+    <!-- Menu Title-->
+    <string name="menu_logout">LogOut</string>
+
+</resources>
