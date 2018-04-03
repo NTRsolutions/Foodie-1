@@ -246,6 +246,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         strPassword = edtPassword.getText().toString().trim();
         if(loginValidate()){
             CommonUtils.clearErrorFromView(loginForm);
+            CommonUtils.hideKeyboard(LoginActivity.this);
             if(InternetConnect.isConnected(LoginActivity.this)) {
                 mProgressDialog.show();
                 loginWebService();
@@ -382,8 +383,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     SharedPrefrenceManager.getInstance(LoginActivity.this).setUserDetails(responseData.getUser());
                     AppController.getSessionData(getApplicationContext());
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    mProgressDialog.dismiss();
                     finish();
+                    mProgressDialog.dismiss();
                 }else{
                     mProgressDialog.dismiss();
                     CommonUtils.showAlertMessage(LoginActivity.this,getString(R.string.error),getString(R.string.error),responseData.getMessage(),getString(R.string.ok));

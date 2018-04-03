@@ -248,18 +248,18 @@ public class HomeActivity extends AppCompatActivity
                 break;*/
             case R.id.nav_logout://logout current session
             {
-                //Remove Main Session
-                SharedPrefrenceManager.getInstance(this).removeSession();
+
                 //Remove Social Login session
                 if(SharedPrefrenceManager.getInstance(this).isSocialLogged()){
                     if(SharedPrefrenceManager.getInstance(this).getSocialType().equals(Constant.FACEBOOK)){
-                        Log.e("Logout"," successfully logout from facebook");
                         LoginManager.getInstance().logOut();
                     }else if(SharedPrefrenceManager.getInstance(this).getSocialType().equals(Constant.GMAIL)){
                         Auth.GoogleSignInApi.signOut(AppController.mGoogleApiClient);
                     }
                     SharedPrefrenceManager.getInstance(this).removeSocialData();
                 }
+                //Remove Main Session
+                SharedPrefrenceManager.getInstance(this).removeSession();
 
                 Intent intent = new Intent(this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
