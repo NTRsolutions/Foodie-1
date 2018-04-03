@@ -106,6 +106,7 @@ public class SharedPrefrenceManager {
         SharedPreferences sharedPreferences = getSharedPrefrences(Constant.SOCIAL_MEDIA);
         return sharedPreferences.getString(Constant.SOCIAL_TYPE,null);
     }
+
     public boolean removeSocialData(){
         SharedPreferences.Editor editor = getSharedPrefrences(Constant.SOCIAL_MEDIA).edit();
         editor.remove(Constant.SOCIAL_LOGGED);

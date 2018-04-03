@@ -245,6 +245,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         strUsername = edtUsername.getText().toString().trim();
         strPassword = edtPassword.getText().toString().trim();
         if(loginValidate()){
+
             CommonUtils.clearErrorFromView(loginForm);
             CommonUtils.hideKeyboard(LoginActivity.this);
             if(InternetConnect.isConnected(LoginActivity.this)) {

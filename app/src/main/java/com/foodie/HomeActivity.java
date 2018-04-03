@@ -248,7 +248,6 @@ public class HomeActivity extends AppCompatActivity
                 break;*/
             case R.id.nav_logout://logout current session
             {
-
                 //Remove Social Login session
                 if(SharedPrefrenceManager.getInstance(this).isSocialLogged()){
                     if(SharedPrefrenceManager.getInstance(this).getSocialType().equals(Constant.FACEBOOK)){
